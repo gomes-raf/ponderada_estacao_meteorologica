@@ -25,14 +25,21 @@ def inserir_leitura(temperatura, umidade, pressao=None):
         )
         return cursor.lastrowid
     
-# • listar_leituras(limite=50) — SELECT com paginação básica
-def listar_leituras(limite=50):
+# • listar_leituras(limite=50, offset=0) — SELECT com paginação básica
+def listar_leituras(limite=50, offset=0):
     with get_db_connection() as conn:
         cursor = conn.execute(
-            'SELECT * FROM leituras ORDER BY timestamp DESC LIMIT ?',
-            (limite,)
+            'SELECT * FROM leituras ORDER BY timestamp DESC LIMIT ? OFFSET ?',
+            (limite, offset)
         )
         return [dict(row) for row in cursor.fetchall()]
+
+# • contar_leituras() — retorna total de leituras no banco
+def contar_leituras():
+    with get_db_connection() as conn:
+        cursor = conn.execute('SELECT COUNT(*) as total FROM leituras')
+        row = cursor.fetchone()
+        return row['total'] if row else 0
 
 # • buscar_leitura(id) — SELECT por id    
 def buscar_leitura(id): 

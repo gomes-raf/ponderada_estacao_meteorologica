@@ -1,0 +1,57 @@
+{% extends 'base.html' %} {% block content %}
+<section class="section-header">
+  <h1>Histórico de leituras</h1>
+  <p>Veja as leituras mais recentes registradas pelo sistema.</p>
+</section>
+
+<section class="chart-section">
+  <h2>Gráfico de Variação Temporal</h2>
+  <canvas id="chart" width="400" height="200"></canvas>
+</section>
+
+{% if leituras %}
+<div class="table-responsive">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Temperatura</th>
+        <th>Umidade</th>
+        <th>Pressão</th>
+        <th>Timestamp</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody id="history-body">
+      {% for leitura in leituras %}
+      <tr>
+        <td>{{ leitura.id }}</td>
+        <td>{{ leitura.temperatura }}</td>
+        <td>{{ leitura.umidade }}</td>
+        <td>{{ leitura.pressao or '-' }}</td>
+        <td>{{ leitura.timestamp }}</td>
+        <td class="actions-cell">
+          <a class="link-button" href="{{ url_for('editar', id=leitura.id) }}"
+            >Editar</a
+          >
+          <form
+            action="{{ url_for('deletar_leitura_form', id=leitura.id) }}"
+            method="post"
+            class="inline-form"
+          >
+            <button type="submit" class="danger">Excluir</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="pagination-controls">
+  <button id="page-prev" class="button secondary">Anterior</button>
+  <span id="page-info">Página 1</span>
+  <button id="page-next" class="button secondary">Próxima</button>
+</div>
+{% else %}
+<p>Nenhuma leitura registrada ainda.</p>
+{% endif %} {% endblock %}

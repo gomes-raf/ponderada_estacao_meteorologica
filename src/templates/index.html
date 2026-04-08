@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% block content %}
+<section class="hero">
+  <h1>Bem-vindo à estação meteorológica</h1>
+  <p>Registre leituras de temperatura, umidade e pressão atmosférica.</p>
+  <div class="actions">
+    <a class="button" href="{{ url_for('historico') }}">Ver Histórico</a>
+  </div>
+</section>
+
+<section class="last-readings">
+  <h2>Últimas Leituras</h2>
+  <div id="last-readings-container">
+    <p>Carregando...</p>
+  </div>
+  <button id="refresh-button" class="button secondary">Atualizar</button>
+</section>
+
+<section class="form-card">
+  <h2>Adicionar nova leitura</h2>
+  <form action="{{ url_for('criar_com_form') }}" method="post">
+    <label for="temperatura">Temperatura (°C)</label>
+    <input
+      type="number"
+      step="0.1"
+      name="temperatura"
+      id="temperatura"
+      required
+    />
+
+    <label for="umidade">Umidade (%)</label>
+    <input type="number" step="0.1" name="umidade" id="umidade" required />
+
+    <label for="pressao">Pressão (hPa)</label>
+    <input type="number" step="0.1" name="pressao" id="pressao" />
+
+    <button type="submit">Salvar leitura</button>
+  </form>
+</section>
+{% endblock %}
