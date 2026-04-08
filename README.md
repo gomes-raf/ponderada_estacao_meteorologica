@@ -65,6 +65,10 @@ Arduino Uno          BMP280
 - Adafruit_BMP280
 - Adafruit_Sensor
 
+No final, a montagem deve ser parecida com a imagem:
+
+<img src="assets/montagem.jpeg">
+
 ## Instalação e Configuração
 
 ### Pré-requisitos
@@ -129,8 +133,18 @@ Abra seu navegador e vá para: http://localhost:5000
 ### Interface Web
 
 1. **Página Inicial (/)**: Visualize as últimas leituras e adicione novas manualmente
+
+<img src="assets/ultimas_leituras.png">
+
+<img src="assets/nova_leitura.png">
+
 2. **Histórico (/historico)**: Veja todas as leituras em tabela + gráfico temporal
-3. **Edição**: Clique em "Editar" em qualquer leitura para corrigir valores
+
+<img src="assets/grafico.png">
+
+<img src="assets/historico.png">
+
+3. **Edição e exclusão**: Clique em "Editar" ou em "Excluir" em qualquer leitura para corrigir valores ou excluí-lo.
 
 ### API REST
 
@@ -171,48 +185,6 @@ Para alterar o intervalo de envio do Arduino:
 
 1. Abra `arduino/estacao.ino`
 2. Modifique `delay(5000)` (valor em milissegundos)
-
-### Banco de Dados
-
-O arquivo `schema.sql` contém a estrutura da tabela. Para recriar:
-
-```bash
-cd src
-rm database.db  # Remove o banco atual
-python -c "from database import init_db; init_db()"
-```
-
-## Solução de Problemas
-
-### Erro: "ModuleNotFoundError: No module named 'serial'"
-
-```bash
-pip install pyserial
-```
-
-### Erro: "could not open port 'COM5'"
-
-- Feche o Serial Monitor do Arduino IDE
-- Verifique se a porta está correta no Gerenciador de Dispositivos
-- Reinicie o Arduino
-
-### Erro: "SerialException: device reports readiness to read but returned no data"
-
-- Verifique as conexões do sensor DHT11
-- Certifique-se que o sensor está alimentado corretamente
-- Teste com outro sensor se possível
-
-### Gráfico não aparece
-
-- Verifique se há dados no banco
-- Abra o console do navegador (F12) para erros JavaScript
-- Certifique-se que Chart.js está carregando
-
-### Arduino não envia dados
-
-- Abra o Serial Monitor (9600 baud) para verificar se o Arduino está enviando JSON
-- Verifique se o sensor DHT11 está conectado corretamente
-- Teste com valores fixos no código do Arduino
 
 ## Estrutura do Projeto
 
